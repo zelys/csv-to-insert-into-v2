@@ -1,4 +1,4 @@
-# funsion para definir los tipos de datos
+# función para definir los tipos de datos
 def definir_datos(filas):
     for indice in enumerate(filas):
         for dato in enumerate(indice[1]):
@@ -24,13 +24,19 @@ def procesar_archivo(nombre_archivo):
 
     # concatenar lista e imprimir archivo SQL
     with open(f"{nombre_archivo}.sql", "w") as insert_into:
-        insert_into.write(f"INSERT INTO ({', '.join(archivo.pop(0))})\nVALUE\n")
+        insert_into.write(
+            f"INSERT INTO {nombre_archivo} ({', '.join(archivo.pop(0))})\nVALUE\n"
+        )
         definir_datos(archivo)
         for i in enumerate(archivo):
             if i[0] == len(archivo) - 1:
                 insert_into.write(f"({', '.join(i[1])});")
             else:
                 insert_into.write(f"({', '.join(i[1])}),\n")
+
+
+analizar = input("Ingresa el nombre del archivo CSV: ")
+procesar_archivo(analizar)
 
 
 analizar = input("Ingresa el nombre del archivo CSV: ")
