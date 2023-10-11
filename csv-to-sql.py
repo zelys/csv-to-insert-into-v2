@@ -37,7 +37,3 @@ def procesar_archivo(nombre_archivo):
 
 analizar = input("Ingresa el nombre del archivo CSV: ")
 procesar_archivo(analizar)
-
-
-analizar = input("Ingresa el nombre del archivo CSV: ")
-procesar_archivo(analizar)
