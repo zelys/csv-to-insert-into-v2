@@ -1,3 +1,6 @@
+import csv
+
+
 # función para definir los tipos de datos
 def definir_datos(filas):
     for indice in enumerate(filas):
@@ -13,23 +16,24 @@ def definir_datos(filas):
                     dato[0]
                 ] = f"'{dato[1][6:] + dato[1][2:6] + dato[1][0:2]}'"
             else:
-                filas[indice[0]][dato[0]] = f"'{dato[1]}'"
+                filas[indice[0]][dato[0]] = f'"{dato[1]}"'
     return filas
 
 
 def procesar_archivo(nombre_archivo):
-    # Abrir y leer archivo CSV
-    with open(f"{nombre_archivo}.csv", "r") as archivo_csv:
-        archivo = [linea.strip().split(";") for linea in archivo_csv]
-
-    # concatenar lista e imprimir archivo SQL
+    # leer el archivo csv, convertir cada fila en una lista y guardar todo en una lista
+    with open(f"{nombre_archivo}.csv", "r", errors="ignore") as archivo_csv:
+        archivo = csv.reader(archivo_csv, delimiter=";")
+        filas = [fila for fila in archivo]
+    # crear la primera fila del script sql que identifica los atributos de la tabla
+    # (se elimina el primer elemento de la lista)
     with open(f"{nombre_archivo}.sql", "w") as insert_into:
         insert_into.write(
-            f"INSERT INTO {nombre_archivo} ({', '.join(archivo.pop(0))})\nVALUE\n"
+            f"INSERT INTO {nombre_archivo} ({', '.join(filas.pop(0))})\nVALUE\n"
         )
-        definir_datos(archivo)
-        for i in enumerate(archivo):
-            if i[0] == len(archivo) - 1:
+        definir_datos(filas)
+        for i in enumerate(filas):
+            if i[0] == len(filas) - 1:
                 insert_into.write(f"({', '.join(i[1])});")
             else:
                 insert_into.write(f"({', '.join(i[1])}),\n")
@@ -37,3 +41,4 @@ def procesar_archivo(nombre_archivo):
 
 analizar = input("Ingresa el nombre del archivo CSV: ")
 procesar_archivo(analizar)
+
