@@ -1,4 +1,4 @@
-INSERT INTO (Med_Id, Med_Nombres, Med_Apellido_Paterno, Med_Apellido_Materno, Med_Edad, Esp_Id)
+INSERT INTO medicos (Med_Id, Med_Nombres, Med_Apellido_Paterno, Med_Apellido_Materno, Med_Edad, Esp_Id)
 VALUE
 (1, 'OSCAR PATRICIO', 'BASTIAS', 'FIGUEROA', 55, 17),
 (2, 'LENNIS ALEXI', 'BARBA', 'CAVERO', 45, 14),
